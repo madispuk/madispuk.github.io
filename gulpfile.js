@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
+var autoprefixer = require('gulp-autoprefixer');
+var rename = require('gulp-rename');
 
 gulp.task('vendor-bundle', function() {
   gulp.src([
@@ -19,3 +22,20 @@ gulp.task('vendor-bundle', function() {
   .pipe(uglify())
   .pipe(gulp.dest('dist'));
 });
+
+
+gulp.task('minify-css', () => {
+  return gulp.src([
+    'assets/css/styles-11.css',
+    'assets/plugins/bootstrap/css/bootstrap.min.css',
+    'assets/plugins/font-awesome/css/font-awesome.css',
+  ])
+  .pipe(minifyCSS())
+  .pipe(concat('style.min.css'))
+  .pipe(gulp.dest('dist/css'))
+})
+
+gulp.task('copy-fonts', () => {
+  return gulp.src('./assets/plugins/font-awesome/fonts/*', {base: './assets/plugins/font-awesome/fonts'})
+    .pipe(gulp.dest('./dist/fonts/'));
+})
