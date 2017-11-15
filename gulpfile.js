@@ -4,6 +4,7 @@ var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
+var critical = require('critical');
 
 gulp.task('vendor-bundle', function() {
   gulp.src([
@@ -39,3 +40,17 @@ gulp.task('copy-fonts', () => {
   return gulp.src('./assets/plugins/font-awesome/fonts/*', {base: './assets/plugins/font-awesome/fonts'})
     .pipe(gulp.dest('./dist/fonts/'));
 })
+
+gulp.task('build', function() {
+  critical.generate({
+      inline: true,
+      src: 'index-raw.html',
+      dest: 'index.html',
+      minify: true,
+      width: 1300,
+      height: 900
+  });
+    // return gulp.src('./index.html')
+    //     .pipe(inlineCss())
+    //     .pipe(gulp.dest('build/'));
+});
