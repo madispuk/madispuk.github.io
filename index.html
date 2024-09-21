@@ -7,7 +7,7 @@
     <link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        #map { height: 70vh; }
+        #map { height: 65vh; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -57,7 +57,7 @@
         }).addTo(map);
 
         // Image overlay variable (initial bounds)
-        var imageUrl = 'liivalaia.jpeg'; // Path to the JPEG image
+        var imageUrl = 'liivalaia-200-no-alpha.png'; // Path to the JPEG image
         var imageBounds = [
             [59.435725, 24.720350], // Upper-left corner (latitude, longitude)
             [59.424995, 24.765921]  // Lower-right corner (latitude, longitude)
