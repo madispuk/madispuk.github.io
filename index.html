@@ -13,10 +13,15 @@
     </style>
   </head>
   <body class="bg-gray-100 text-gray-900">
-    <div class="container mx-auto p-4">
-      <div id="controls" class="flex justify-center mt-4">
-        <h2 class="text-1xl font-semibold dark:text-white">Liivalaia eskiis 27.09.2022</h2>
+    <div class="container mx-auto">
+      <!-- Add select input here -->
+      <div id="controls" class="flex justify-center p-4">
+        <select id="image-select" class="w-full md:w-1/4 bg-white p-2 rounded-lg shadow-lg border border-gray-300">
+          <option value="liivalaia-200-no-alpha.png">Liivalaia (27.09.2022)</option>
+          <option value="kohalik-1.png">Koidu (Kohalik 1)</option>
+        </select>
       </div>
+
       <div id="map" class="rounded shadow-lg border border-gray-300"></div>
 
       <div
@@ -25,7 +30,7 @@
       >
         <div class="slider-group w-full md:w-1/2 bg-white p-4 rounded-lg shadow-lg border border-gray-300">
           <label class="block text-sm font-semibold mb-2 text-center"
-            >Overlay Opacity: <span id="opacity-display" class="font-bold text-indigo-600">0.33</span></label
+            >Overlay Opacity: <span id="opacity-display" class="font-bold text-indigo-600">0.6</span></label
           >
           <input
             type="range"
@@ -76,17 +81,31 @@
         })
         .addTo(map);
 
-      // Image overlay variable (initial bounds)
-      var imageUrl = "liivalaia-200-no-alpha.png"; // Path to the JPEG image
-      var imageBounds = [
-        [59.435725, 24.72035], // Upper-left corner (latitude, longitude)
-        [59.424995, 24.765921], // Lower-right corner (latitude, longitude)
-      ];
+      // Predefined image overlays with their corresponding bounds
+      var imageOverlays = {
+        "liivalaia-200-no-alpha.png": {
+          bounds: [
+            [59.435725, 24.72035], // Upper-left corner (latitude, longitude)
+            [59.424995, 24.765921], // Lower-right corner (latitude, longitude)
+          ],
+        },
+        "kohalik-1.png": {
+          bounds: [
+            [59.43014949, 24.72852105], // Upper-left corner (latitude, longitude)
+            [59.4266733, 24.7350316], // Lower-right corner (latitude, longitude)
+          ],
+        },
+      };
 
-      // Add the image overlay with initial opacity
-      var imageOverlay = L.imageOverlay(imageUrl, imageBounds, {
-        opacity: 0.33, // Initial opacity
-      }).addTo(map);
+      // Current image overlay
+      var imageOverlay = L.imageOverlay(
+        "liivalaia-200-no-alpha.png",
+        imageOverlays["liivalaia-200-no-alpha.png"].bounds,
+        {
+          opacity: 0.6,
+          interactive: true,
+        },
+      ).addTo(map);
 
       // Function to update the overlay opacity dynamically
       function updateOverlayOpacity() {
@@ -112,10 +131,30 @@
         document.getElementById("opacity-display").innerText = newOpacity.toFixed(2);
       }
 
+      // Function to update image overlay based on selection
+      function updateImageOverlay() {
+        var selectedImageUrl = document.getElementById("image-select").value;
+        var bounds = imageOverlays[selectedImageUrl].bounds;
+
+        // Remove the current overlay
+        map.removeLayer(imageOverlay);
+
+        // Add the new overlay
+        imageOverlay = L.imageOverlay(selectedImageUrl, bounds, {
+          opacity: parseFloat(document.getElementById("opacity").value),
+          interactive: true,
+        }).addTo(map);
+
+        // Fit the map to the new image bounds
+        map.fitBounds(bounds);
+      }
+
       // Attach event listener to the toggle button
       document.getElementById("toggle-opacity").addEventListener("click", toggleOverlayOpacity);
       // Attach event listeners to sliders
       document.getElementById("opacity").addEventListener("input", updateOverlayOpacity);
+      // Attach event listener to the image select dropdown
+      document.getElementById("image-select").addEventListener("change", updateImageOverlay);
     </script>
   </body>
 </html>
