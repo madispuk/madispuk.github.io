@@ -11,6 +11,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "proj4leaflet";
 import "./App.css";
+import PageTitle from ".//PageTitle";
 
 // Map projection setup
 const crs = new L.Proj.CRS(
@@ -32,6 +33,8 @@ const imageOverlays = [
       [59.435725, 24.72035],
       [59.424995, 24.765921],
     ],
+    center: [59.42725, 24.742649],
+    zoom: 11,
   },
   {
     name: "Kohalik 1",
@@ -67,12 +70,16 @@ const imageOverlays = [
   },
 ];
 
-const MapWithImageOverlay = ({ imageUrl, bounds, opacity }) => {
+const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
   const map = useMap();
 
   useEffect(() => {
-    map.fitBounds(bounds);
-  }, [map, bounds]);
+    if (center && zoom) {
+      map.setView(center, zoom);
+    } else {
+      map.fitBounds(bounds);
+    }
+  }, [map, bounds, center, zoom]);
 
   return <ImageOverlay url={imageUrl} bounds={bounds} opacity={opacity} />;
 };
@@ -93,8 +100,10 @@ function App() {
     setOpacity((prevOpacity) => (prevOpacity === 1 ? 0 : 1));
   };
 
+  const image = imageOverlays.find((o) => o.image === selectedImage);
   return (
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
+      <PageTitle title="Tallinna eskiisid" />
       {/* Map Container */}
       <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
         <MapContainer
@@ -112,7 +121,9 @@ function App() {
           />
           <MapWithImageOverlay
             imageUrl={selectedImage}
-            bounds={imageOverlays.find((o) => o.image === selectedImage).bounds}
+            bounds={image.bounds}
+            center={image.center}
+            zoom={image.zoom}
             opacity={opacity}
           />
         </MapContainer>
