@@ -24,29 +24,48 @@ const crs = new L.Proj.CRS(
   },
 );
 
-// Predefined image overlays with bounds
-const imageOverlays = {
-  "images/liivalaia-200-no-alpha.png": [
-    [59.435725, 24.72035],
-    [59.424995, 24.765921],
-  ],
-  "images/kohalik-1.png": [
-    [59.43014949, 24.72852105],
-    [59.4266733, 24.7350316],
-  ],
-  "images/kohalik-2.png": [
-    [59.42707108, 24.72916985],
-    [59.42279257, 24.73667545],
-  ],
-  "images/kohalik-3.png": [
-    [59.4238552, 24.7336033],
-    [59.42036809, 24.74241055],
-  ],
-  "images/kohalik-4.png": [
-    [59.4216241, 24.7396935],
-    [59.4191323, 24.7443725],
-  ],
-};
+const imageOverlays = [
+  {
+    name: "Liivalaia",
+    image: "images/liivalaia-200-no-alpha.png",
+    bounds: [
+      [59.435725, 24.72035],
+      [59.424995, 24.765921],
+    ],
+  },
+  {
+    name: "Kohalik 1",
+    image: "images/kohalik-1.png",
+    bounds: [
+      [59.43014949, 24.72852105],
+      [59.4266733, 24.7350316],
+    ],
+  },
+  {
+    name: "Kohalik 2",
+    image: "images/kohalik-2.png",
+    bounds: [
+      [59.42707108, 24.72916985],
+      [59.42279257, 24.73667545],
+    ],
+  },
+  {
+    name: "Kohalik 3",
+    image: "images/kohalik-3.png",
+    bounds: [
+      [59.4238552, 24.7336033],
+      [59.42036809, 24.74241055],
+    ],
+  },
+  {
+    name: "Kohalik 4",
+    image: "images/kohalik-4.png",
+    bounds: [
+      [59.4216241, 24.7396935],
+      [59.4191323, 24.7443725],
+    ],
+  },
+];
 
 const MapWithImageOverlay = ({ imageUrl, bounds, opacity }) => {
   const map = useMap();
@@ -59,9 +78,7 @@ const MapWithImageOverlay = ({ imageUrl, bounds, opacity }) => {
 };
 
 function App() {
-  const [selectedImage, setSelectedImage] = useState(
-    Object.keys(imageOverlays)[0],
-  );
+  const [selectedImage, setSelectedImage] = useState(imageOverlays[0].image);
   const [opacity, setOpacity] = useState(0.6);
 
   const handleImageChange = (e) => {
@@ -77,75 +94,84 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gray-100 text-gray-900">
-      <div className="container mx-auto p-4 h-full flex flex-col">
-        {/* Dropdown for selecting images */}
-        <div className="flex justify-center p-4">
+    <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
+      {/* Map Container */}
+      <div className="w-full h-3/4 mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+        <MapContainer
+          className="h-full w-full"
+          center={[59.43, 24.73]} // Starting point near Liivalaia
+          zoom={10}
+          crs={crs}
+        >
+          {/* Add the TileLayer for the base map */}
+          <WMSTileLayer
+            url="https://kaart.maaamet.ee/wms/alus?"
+            layers="of10000"
+            format="image/png"
+            transparent={false}
+          />
+          <MapWithImageOverlay
+            imageUrl={selectedImage}
+            bounds={imageOverlays.find((o) => o.image === selectedImage).bounds}
+            opacity={opacity}
+          />
+        </MapContainer>
+      </div>
+
+      {/* Bottom Controls */}
+      <div className="w-full md:w-3/4 lg:w-1/2 mx-auto bg-white rounded-lg shadow-md p-4">
+        {/* Image Selector */}
+        <div className="mb-4">
+          <label
+            htmlFor="image-select"
+            className="block text-sm font-medium mb-2 text-gray-700"
+          >
+            Select Overlay:
+          </label>
           <select
             id="image-select"
-            className="w-full md:w-1/4 bg-white p-2 rounded-lg shadow-lg border border-gray-300"
+            className="w-full p-2 rounded-lg border-gray-300 shadow-sm"
             onChange={handleImageChange}
             value={selectedImage}
           >
-            {Object.keys(imageOverlays).map((key) => (
-              <option key={key} value={key}>
-                {key}
+            {imageOverlays.map((o) => (
+              <option key={o.image} value={o.image}>
+                {o.name}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Map Container */}
-        <div className="flex-grow">
-          <MapContainer
-            className="h-full map-container rounded shadow-lg border border-gray-300"
-            center={[59.43, 24.73]} // Starting point near Liivalaia
-            zoom={10}
-            crs={crs}
+        {/* Opacity Slider */}
+        <div className="flex items-center justify-between mb-4">
+          <label
+            className="text-sm font-medium text-gray-700"
+            htmlFor="opacity"
           >
-            {/* Add the TileLayer for the base map */}
-            <WMSTileLayer
-              url="https://kaart.maaamet.ee/wms/alus?"
-              layers="of10000"
-              format="image/png"
-              transparent={false} // No transparency needed for base layer
-            />
-            <MapWithImageOverlay
-              imageUrl={selectedImage}
-              bounds={imageOverlays[selectedImage]}
-              opacity={opacity}
-            />
-          </MapContainer>
+            Overlay Opacity:
+          </label>
+          <span className="font-bold text-indigo-600">
+            {opacity.toFixed(2)}
+          </span>
         </div>
+        <input
+          type="range"
+          id="opacity"
+          min="0"
+          max="1"
+          step="0.01"
+          value={opacity}
+          onChange={handleOpacityChange}
+          className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer"
+        />
 
-        {/* Controls */}
-        <div className="flex flex-col md:flex-row justify-center items-center mt-4 space-y-4 md:space-y-0 md:space-x-4">
-          {/* Slider for opacity */}
-          <div className="slider-group w-full md:w-1/2 bg-white p-4 rounded-lg shadow-lg border border-gray-300">
-            <label className="block text-sm font-semibold mb-2 text-center">
-              Overlay Opacity:{" "}
-              <span id="opacity-display" className="font-bold text-indigo-600">
-                {opacity.toFixed(2)}
-              </span>
-            </label>
-            <input
-              type="range"
-              id="opacity"
-              min="0"
-              max="1"
-              step="0.01"
-              value={opacity}
-              onChange={handleOpacityChange}
-              className="w-full h-2 bg-indigo-300 rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-
-          {/* Toggle Button */}
+        {/* Toggle Button */}
+        <div className="mt-4">
           <button
             onClick={toggleOpacity}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700"
+            className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200"
           >
-            Toggle Overlay
+            Toggle Overlay Opacity
           </button>
         </div>
       </div>
