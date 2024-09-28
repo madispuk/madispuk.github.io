@@ -177,7 +177,7 @@ function App() {
             <label className="text-sm font-medium text-gray-700" htmlFor="opacity">
               Opacity:
             </label>
-            <span className="font-bold text-indigo-600 pl-2">{opacity.toFixed(2)}</span>
+            <span className="font-bold text-linnad-primary-500 pl-2">{opacity.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -187,13 +187,13 @@ function App() {
             step="0.01"
             value={opacity}
             onChange={handleOpacityChange}
-            className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer"
+            className="w-full h-2 bg-linnad-primary-300 rounded-lg appearance-none cursor-pointer"
           />
 
           <div className="mt-4">
             <button
               onClick={toggleOpacity}
-              className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200"
+              className="w-full px-4 py-2 bg-linnad-primary-500 text-white font-semibold rounded-lg shadow-md hover:bg-linnad-primary-600 transition duration-200"
             >
               Toggle
             </button>
