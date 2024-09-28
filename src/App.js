@@ -27,6 +27,12 @@ const imageOverlays = [
     ],
     center: [59.4244552, 24.732682],
     zoom: 11,
+    info: {
+      title: "Koidu tänava arhitektuurivõistlus 2023-2024",
+      url: "https://www.tallinn.ee/et/koidu",
+      description:
+        "Ideekavand 'Kohalik'. OÜ Stuudio Täna arhitektid Tristan Krevald, Ra Martin Puhkan, Siim Tanel Tõnisson ja Madis Eek.",
+    },
   },
   {
     name: "Liivalaia",
@@ -37,6 +43,13 @@ const imageOverlays = [
     ],
     center: [59.42725, 24.742649],
     zoom: 11,
+    info: {
+      title:
+        "Liivalaia tänava rekonstrueerimise ja trammitee rajamise projekteerimistingimuste eelnõu avalik väljapanek (24.09.-07.10.2024)",
+      url: "https://www.tallinn.ee/et/liivalaia",
+      description:
+        "Tallinna Kesklinna Valitsus ning Tallinna Keskkonna- ja Kommunaalamet",
+    },
   },
   {
     name: "Poska",
@@ -45,6 +58,12 @@ const imageOverlays = [
       [59.4438607, 24.7839889],
       [59.4401005, 24.7865829],
     ],
+    info: {
+      title: "J. Poska - Reidi tee rattatee põhiprojekt (september 2024)",
+      url: "https://www.tallinn.ee/et/poskareidi",
+      description:
+        "Projekti eesmärk on Tallinna Kesklinnas asuvale Narva mnt 69 kinnistule projekteerida rattatee, mis ühendaks Reidi teed ja J. Poska tänavat. See tagab ühenduse Narva maantee ja Reidi tee vahel ning võimaldab sealt edasi liikuda Pirita promenaadile.",
+    },
   },
   {
     name: "Paldiski mnt",
@@ -53,6 +72,13 @@ const imageOverlays = [
       [59.4325472, 24.6997364],
       [59.4280967, 24.7142602],
     ],
+    info: {
+      title:
+        "Paldiski mnt, Merimetsa tee ja Hipodroomi tänava rekonstrueerimine",
+      url: "https://www.tallinn.ee/et/paldiskimnt",
+      description:
+        "Projekti eesmärgiks on koostada Paldiski maantee rekonstrueerimise lahendus alates Mooni tänavast kuni Mustamäe tee- Endla tn- Paldiski mnt ristmikuni, mille tulemusel luuakse turvalisem ja mugavam linnaruum kõigile liiklejatele.",
+    },
   },
 ];
 
@@ -69,18 +95,15 @@ const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
   }, [map, center, zoom, bounds]);
 
   useEffect(() => {
-    // Remove the existing ImageOverlay if it exists and the imageUrl has changed
     if (overlayRef.current) {
       map.removeLayer(overlayRef.current);
     }
 
-    // Create and add the new ImageOverlay
     const newOverlay = L.imageOverlay(imageUrl, bounds, { opacity });
     overlayRef.current = newOverlay;
     newOverlay.addTo(map);
 
     return () => {
-      // Clean up the overlay when the component unmounts or before the new overlay is added
       if (overlayRef.current) {
         map.removeLayer(overlayRef.current);
       }
@@ -89,14 +112,13 @@ const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl, bounds, map]);
 
-  // Update the opacity without resetting the ImageOverlay when only opacity changes
   useEffect(() => {
     if (overlayRef.current) {
       overlayRef.current.setOpacity(opacity);
     }
   }, [opacity]);
 
-  return null; // No JSX needed since we're managing ImageOverlay directly with Leaflet
+  return null;
 };
 
 function App() {
@@ -116,10 +138,11 @@ function App() {
   };
 
   const image = imageOverlays.find((o) => o.image === selectedImage);
+
   return (
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
       <PageTitle title="Tallinna eskiisid" />
-      <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+      <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 ">
         <MapContainer
           className="h-full w-full"
           center={[59.43, 24.73]}
@@ -142,51 +165,77 @@ function App() {
         </MapContainer>
       </div>
 
-      <div className="w-full md:w-1/4 lg:w-1/4 mx-auto bg-white rounded-lg shadow-md p-4">
-        <div className="mb-4">
-          <select
-            id="image-select"
-            className="w-full p-2 rounded-lg border-gray-300 shadow-sm"
-            onChange={handleImageChange}
-            value={selectedImage}
-          >
-            {imageOverlays.map((o) => (
-              <option key={o.image} value={o.image}>
-                {o.name}
-              </option>
-            ))}
-          </select>
+      {/* Container for controls and info */}
+      <div className="w-full md:w-full lg:w-1/2 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
+        {/* Controls Block */}
+        <div className="w-full md:w-1/2 lg:w-1/2 p-4">
+          <div className="mb-4">
+            <select
+              id="image-select"
+              className="w-full p-2 rounded-lg border-gray-300 shadow-sm"
+              onChange={handleImageChange}
+              value={selectedImage}
+            >
+              {imageOverlays.map((o) => (
+                <option key={o.image} value={o.image}>
+                  {o.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center justify-start mb-4">
+            <label
+              className="text-sm font-medium text-gray-700"
+              htmlFor="opacity"
+            >
+              Opacity:
+            </label>
+            <span className="font-bold text-indigo-600 pl-2">
+              {opacity.toFixed(2)}
+            </span>
+          </div>
+          <input
+            type="range"
+            id="opacity"
+            min="0"
+            max="1"
+            step="0.01"
+            value={opacity}
+            onChange={handleOpacityChange}
+            className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer"
+          />
+
+          <div className="mt-4">
+            <button
+              onClick={toggleOpacity}
+              className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200"
+            >
+              Toggle
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center justify-start mb-4">
-          <label
-            className="text-sm font-medium text-gray-700"
-            htmlFor="opacity"
-          >
-            Opacity:
-          </label>
-          <span className="font-bold text-indigo-600 pl-2">
-            {opacity.toFixed(2)}
-          </span>
-        </div>
-        <input
-          type="range"
-          id="opacity"
-          min="0"
-          max="1"
-          step="0.01"
-          value={opacity}
-          onChange={handleOpacityChange}
-          className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer"
-        />
-
-        <div className="mt-4">
-          <button
-            onClick={toggleOpacity}
-            className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200"
-          >
-            Toggle
-          </button>
+        {/* Info Block */}
+        <div className="hidden md:block w-full md:w-1/2 lg:w-1/2 p-4 bg-gray-100 rounded-lg shadow-inner mt-4 md:mt-0">
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">
+            {image.info?.title ?? "Image Info"}
+          </h2>
+          <p className="text-gray-600">
+            {image.info?.description ?? "No description available."}
+          </p>
+          <ul className="list-disc list-inside mt-2">
+            <li>
+              URL:{" "}
+              <a
+                href={image.info.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {image.info.url}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
