@@ -4,19 +4,25 @@ import PageTitle from "./PageTitle";
 
 const Main = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center">
-      <PageTitle title="Linnad.ee" />
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-50 to-blue-100 p-10">
+      <header className="w-full mb-8">
+        <PageTitle title="Linnad.ee" />
+        <h1 className="text-5xl font-semibold text-gray-800 tracking-tight">Welcome to Linnad.ee</h1>
+        <p className="text-lg text-gray-600 mt-2">Explore the future.</p>
+      </header>
 
-      <div className="text-center p-8 bg-white shadow-lg rounded-lg">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Eskiisid</h1>
-        <p className="text-lg text-gray-600 mb-8"></p>
-        <Link
-          to="/tallinn"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-        >
-          Tallinn
+      <div className="flex-grow">
+        <Link to="/tallinn">
+          <div className="block bg-white shadow-md rounded-lg p-6 max-w-lg transition duration-300 hover:bg-blue-100 hover:shadow-lg">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-4">Tallinn</h2>
+            <p className="text-md text-gray-600">Dive into detailed urban sketches and plans of Tallinn.</p>
+          </div>
         </Link>
       </div>
+
+      <footer className="mt-auto text-sm text-gray-500">
+        <p>© {new Date().getFullYear()} Linnad.ee. All Rights Reserved.</p>
+      </footer>
     </div>
   );
 };

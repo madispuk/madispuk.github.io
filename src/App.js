@@ -10,10 +10,7 @@ const crs = new L.Proj.CRS(
   "EPSG:3301",
   "+proj=lcc +lat_1=59.33333333333334 +lat_2=58 +lat_0=57.51755393055556 +lon_0=24 +x_0=500000 +y_0=6375000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
   {
-    resolutions: [
-      2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125,
-      0.0625,
-    ],
+    resolutions: [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625],
   },
 );
 
@@ -47,8 +44,7 @@ const imageOverlays = [
       title:
         "Liivalaia tänava rekonstrueerimise ja trammitee rajamise projekteerimistingimuste eelnõu avalik väljapanek (24.09.-07.10.2024)",
       url: "https://www.tallinn.ee/et/liivalaia",
-      description:
-        "Tallinna Kesklinna Valitsus ning Tallinna Keskkonna- ja Kommunaalamet",
+      description: "Tallinna Kesklinna Valitsus ning Tallinna Keskkonna- ja Kommunaalamet",
     },
   },
   {
@@ -73,8 +69,7 @@ const imageOverlays = [
       [59.4280967, 24.7142602],
     ],
     info: {
-      title:
-        "Paldiski mnt, Merimetsa tee ja Hipodroomi tänava rekonstrueerimine",
+      title: "Paldiski mnt, Merimetsa tee ja Hipodroomi tänava rekonstrueerimine",
       url: "https://www.tallinn.ee/et/paldiskimnt",
       description:
         "Projekti eesmärgiks on koostada Paldiski maantee rekonstrueerimise lahendus alates Mooni tänavast kuni Mustamäe tee- Endla tn- Paldiski mnt ristmikuni, mille tulemusel luuakse turvalisem ja mugavam linnaruum kõigile liiklejatele.",
@@ -143,12 +138,7 @@ function App() {
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
       <PageTitle title="Tallinna eskiisid" />
       <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 ">
-        <MapContainer
-          className="h-full w-full"
-          center={[59.43, 24.73]}
-          zoom={14}
-          crs={crs}
-        >
+        <MapContainer className="h-full w-full" center={[59.43, 24.73]} zoom={14} crs={crs}>
           <WMSTileLayer
             url="https://kaart.maaamet.ee/wms/alus?"
             layers="of10000"
@@ -165,7 +155,6 @@ function App() {
         </MapContainer>
       </div>
 
-      {/* Container for controls and info */}
       <div className="w-full md:w-full lg:w-1/2 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
         {/* Controls Block */}
         <div className="w-full md:w-1/2 lg:w-1/2 p-4">
@@ -185,15 +174,10 @@ function App() {
           </div>
 
           <div className="flex items-center justify-start mb-4">
-            <label
-              className="text-sm font-medium text-gray-700"
-              htmlFor="opacity"
-            >
+            <label className="text-sm font-medium text-gray-700" htmlFor="opacity">
               Opacity:
             </label>
-            <span className="font-bold text-indigo-600 pl-2">
-              {opacity.toFixed(2)}
-            </span>
+            <span className="font-bold text-indigo-600 pl-2">{opacity.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -216,22 +200,12 @@ function App() {
           </div>
         </div>
 
-        {/* Info Block */}
         <div className="hidden md:block w-full md:w-1/2 lg:w-1/2 p-4 bg-gray-100 rounded-lg shadow-inner mt-4 md:mt-0">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">
-            {image.info?.title ?? "Image Info"}
-          </h2>
-          <p className="text-gray-600">
-            {image.info?.description ?? "No description available."}
-          </p>
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">{image.info?.title ?? "Image Info"}</h2>
+          <p className="text-gray-600">{image.info?.description ?? "No description available."}</p>
           <ul className="list-disc list-inside mt-2">
             <li>
-              URL:{" "}
-              <a
-                href={image.info.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={image.info.url} target="_blank" rel="noopener noreferrer">
                 {image.info.url}
               </a>
             </li>
