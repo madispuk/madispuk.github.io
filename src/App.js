@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  MapContainer,
-  ImageOverlay,
-  useMap,
-  WMSTileLayer,
-} from "react-leaflet";
+import React, { useRef, useEffect, useState } from "react";
+import { MapContainer, useMap, WMSTileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "proj4leaflet";
@@ -63,32 +58,45 @@ const imageOverlays = [
 
 const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
   const map = useMap();
-  let imageOverlay = null; // No need for a state
+  const overlayRef = useRef(null);
 
   useEffect(() => {
-    // Remove the previous ImageOverlay if it exists
-    if (imageOverlay) {
-      map.removeLayer(imageOverlay);
-    }
-
-    // Add the new ImageOverlay
-    imageOverlay = L.imageOverlay(imageUrl, bounds, { opacity });
-    imageOverlay.addTo(map);
-
-    // Set map view based on center or bounds
     if (center && zoom) {
       map.setView(center, zoom);
-    } else {
+    } else if (bounds) {
       map.fitBounds(bounds);
     }
+  }, [map, center, zoom, bounds]);
 
-    // Cleanup function to remove the overlay on unmount
+  useEffect(() => {
+    // Remove the existing ImageOverlay if it exists and the imageUrl has changed
+    if (overlayRef.current) {
+      map.removeLayer(overlayRef.current);
+    }
+
+    // Create and add the new ImageOverlay
+    const newOverlay = L.imageOverlay(imageUrl, bounds, { opacity });
+    overlayRef.current = newOverlay;
+    newOverlay.addTo(map);
+
     return () => {
-      map.removeLayer(imageOverlay);
+      // Clean up the overlay when the component unmounts or before the new overlay is added
+      if (overlayRef.current) {
+        map.removeLayer(overlayRef.current);
+      }
     };
-  }, [imageUrl, bounds, center, zoom, opacity, map]); // Removed imageOverlay from dependencies
 
-  return null; // Since the ImageOverlay is directly managed by the map instance
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageUrl, bounds, map]);
+
+  // Update the opacity without resetting the ImageOverlay when only opacity changes
+  useEffect(() => {
+    if (overlayRef.current) {
+      overlayRef.current.setOpacity(opacity);
+    }
+  }, [opacity]);
+
+  return null; // No JSX needed since we're managing ImageOverlay directly with Leaflet
 };
 
 function App() {
