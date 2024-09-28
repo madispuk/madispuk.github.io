@@ -136,7 +136,7 @@ function App() {
 
   return (
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
-      <PageTitle title="Tallinna eskiisid" />
+      <PageTitle title="linnad.ee - Tallinn" />
       <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 ">
         <MapContainer className="h-full w-full" center={[59.43, 24.73]} zoom={14} crs={crs}>
           <WMSTileLayer

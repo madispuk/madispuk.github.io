@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PageTitle from "./PageTitle";
 
 const Main = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-50 to-blue-100 p-10">
       <header className="w-full mb-8">
-        <PageTitle title="Linnad.ee" />
         <h1 className="text-5xl font-semibold text-gray-800 tracking-tight">Welcome to Linnad.ee</h1>
         <p className="text-lg text-gray-600 mt-2">Explore the future.</p>
       </header>
