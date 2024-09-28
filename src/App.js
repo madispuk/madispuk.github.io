@@ -1,5 +1,3 @@
-// App.js
-
 import React, { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -13,7 +11,6 @@ import "proj4leaflet";
 import "./App.css";
 import PageTitle from ".//PageTitle";
 
-// Map projection setup
 const crs = new L.Proj.CRS(
   "EPSG:3301",
   "+proj=lcc +lat_1=59.33333333333334 +lat_2=58 +lat_0=57.51755393055556 +lon_0=24 +x_0=500000 +y_0=6375000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
@@ -66,16 +63,32 @@ const imageOverlays = [
 
 const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
   const map = useMap();
+  let imageOverlay = null; // No need for a state
 
   useEffect(() => {
+    // Remove the previous ImageOverlay if it exists
+    if (imageOverlay) {
+      map.removeLayer(imageOverlay);
+    }
+
+    // Add the new ImageOverlay
+    imageOverlay = L.imageOverlay(imageUrl, bounds, { opacity });
+    imageOverlay.addTo(map);
+
+    // Set map view based on center or bounds
     if (center && zoom) {
       map.setView(center, zoom);
     } else {
       map.fitBounds(bounds);
     }
-  }, [map, bounds, center, zoom]);
 
-  return <ImageOverlay url={imageUrl} bounds={bounds} opacity={opacity} />;
+    // Cleanup function to remove the overlay on unmount
+    return () => {
+      map.removeLayer(imageOverlay);
+    };
+  }, [imageUrl, bounds, center, zoom, opacity, map]); // Removed imageOverlay from dependencies
+
+  return null; // Since the ImageOverlay is directly managed by the map instance
 };
 
 function App() {
@@ -98,7 +111,6 @@ function App() {
   return (
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
       <PageTitle title="Tallinna eskiisid" />
-      {/* Map Container */}
       <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
         <MapContainer
           className="h-full w-full"
@@ -106,7 +118,6 @@ function App() {
           zoom={14}
           crs={crs}
         >
-          {/* Add the TileLayer for the base map */}
           <WMSTileLayer
             url="https://kaart.maaamet.ee/wms/alus?"
             layers="of10000"
@@ -123,16 +134,8 @@ function App() {
         </MapContainer>
       </div>
 
-      {/* Bottom Controls */}
-      <div className="w-full md:w-3/4 lg:w-1/2 mx-auto bg-white rounded-lg shadow-md p-4">
-        {/* Image Selector */}
+      <div className="w-full md:w-1/4 lg:w-1/4 mx-auto bg-white rounded-lg shadow-md p-4">
         <div className="mb-4">
-          <label
-            htmlFor="image-select"
-            className="block text-sm font-medium mb-2 text-gray-700"
-          >
-            Select Overlay:
-          </label>
           <select
             id="image-select"
             className="w-full p-2 rounded-lg border-gray-300 shadow-sm"
@@ -147,15 +150,14 @@ function App() {
           </select>
         </div>
 
-        {/* Opacity Slider */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-start mb-4">
           <label
             className="text-sm font-medium text-gray-700"
             htmlFor="opacity"
           >
-            Overlay Opacity:
+            Opacity:
           </label>
-          <span className="font-bold text-indigo-600">
+          <span className="font-bold text-indigo-600 pl-2">
             {opacity.toFixed(2)}
           </span>
         </div>
@@ -170,13 +172,12 @@ function App() {
           className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer"
         />
 
-        {/* Toggle Button */}
         <div className="mt-4">
           <button
             onClick={toggleOpacity}
             className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-200"
           >
-            Toggle Overlay Opacity
+            Toggle
           </button>
         </div>
       </div>
