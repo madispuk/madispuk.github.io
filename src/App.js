@@ -26,23 +26,23 @@ const crs = new L.Proj.CRS(
 
 // Predefined image overlays with bounds
 const imageOverlays = {
-  "liivalaia-200-no-alpha.png": [
+  "images/liivalaia-200-no-alpha.png": [
     [59.435725, 24.72035],
     [59.424995, 24.765921],
   ],
-  "kohalik-1.png": [
+  "images/kohalik-1.png": [
     [59.43014949, 24.72852105],
     [59.4266733, 24.7350316],
   ],
-  "kohalik-2.png": [
+  "images/kohalik-2.png": [
     [59.42707108, 24.72916985],
     [59.42279257, 24.73667545],
   ],
-  "kohalik-3.png": [
+  "images/kohalik-3.png": [
     [59.4238552, 24.7336033],
     [59.42036809, 24.74241055],
   ],
-  "kohalik-4.png": [
+  "images/kohalik-4.png": [
     [59.4216241, 24.7396935],
     [59.4191323, 24.7443725],
   ],
@@ -60,7 +60,7 @@ const MapWithImageOverlay = ({ imageUrl, bounds, opacity }) => {
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(
-    "liivalaia-200-no-alpha.png",
+    Object.keys(imageOverlays)[0],
   );
   const [opacity, setOpacity] = useState(0.6);
 
