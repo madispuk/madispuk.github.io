@@ -36,7 +36,6 @@ const imageOverlays = [
     center: [59.4244552, 24.732682],
     zoom: 11,
   },
-
   {
     name: "Liivalaia",
     image: "images/liivalaia-200-no-alpha.png",
@@ -47,38 +46,22 @@ const imageOverlays = [
     center: [59.42725, 24.742649],
     zoom: 11,
   },
-  // {
-  //   name: "Kohalik 1",
-  //   image: "images/kohalik-1.png",
-  //   bounds: [
-  //     [59.43014949, 24.72852105],
-  //     [59.4266733, 24.7350316],
-  //   ],
-  // },
-  // {
-  //   name: "Kohalik 2",
-  //   image: "images/kohalik-2.png",
-  //   bounds: [
-  //     [59.42707108, 24.72916985],
-  //     [59.42279257, 24.73667545],
-  //   ],
-  // },
-  // {
-  //   name: "Kohalik 3",
-  //   image: "images/kohalik-3.png",
-  //   bounds: [
-  //     [59.4238552, 24.7336033],
-  //     [59.42036809, 24.74241055],
-  //   ],
-  // },
-  // {
-  //   name: "Kohalik 4",
-  //   image: "images/kohalik-4.png",
-  //   bounds: [
-  //     [59.4216241, 24.7396935],
-  //     [59.4191323, 24.7443725],
-  //   ],
-  // },
+  {
+    name: "Poska",
+    image: "images/poska.png",
+    bounds: [
+      [59.4438607, 24.7839889],
+      [59.4401005, 24.7865829],
+    ],
+  },
+  {
+    name: "Paldiski mnt",
+    image: "images/paldiski-mnt.png",
+    bounds: [
+      [59.4325472, 24.6997364],
+      [59.4280967, 24.7142602],
+    ],
+  },
 ];
 
 const MapWithImageOverlay = ({ imageUrl, center, zoom, bounds, opacity }) => {
