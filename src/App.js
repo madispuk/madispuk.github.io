@@ -96,11 +96,11 @@ function App() {
   return (
     <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
       {/* Map Container */}
-      <div className="w-full h-3/4 mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+      <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 overflow-hidden">
         <MapContainer
           className="h-full w-full"
-          center={[59.43, 24.73]} // Starting point near Liivalaia
-          zoom={10}
+          center={[59.43, 24.73]}
+          zoom={14}
           crs={crs}
         >
           {/* Add the TileLayer for the base map */}
