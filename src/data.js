@@ -75,4 +75,20 @@ export const sketches = [
         "Valge tänava projekti eesmärgiks on rahustada liiklust ja tõsta jalakäijate turvalisust. Projekti tulemusena muutuvad ülekäigurajad ja bussipeatused mugavamaks ja ligipääsetavamaks ning kogu tänava ulatuses lisandub haljastust. Uus kvaliteetne linnaruum moodustab tulevikus sidusa terviku rajatava Klindipargiga. ",
     },
   },
+  {
+    name: "Imanta tn",
+    image: "images/imanta.png",
+    bounds: [
+      [59.42965072, 24.75924373],
+      [59.42779769, 24.7642769],
+    ],
+    center: [59.4289688, 24.7618801],
+    zoom: 12,
+    info: {
+      title: "Imanta tänava projekteerimistingimuste eelnõu avalik väljapanek",
+      url: "https://www.tallinn.ee/et/imanta",
+      description:
+        "Projekteerimistingimuste alusel kavandatakse lahendada Imanta tänav ja tehnovõrgud. Asendiplaan Liikuvusagentuur OÜ. Arhitekt Tõnis Savi.",
+    },
+  },
 ];
