@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Main = () => {
+const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-200 p-10 pt-15">
-      <header className="w-full mb-8">
+    <div className="flex flex-col min-h-screen bg-slate-200 p-8">
+      <header className="w-full my-8">
         <h1 className="text-5xl font-semibold text-gray-800 tracking-tight">Welcome to linnad.ee</h1>
         <p className="text-lg text-gray-600 mt-2">Explore the future.</p>
       </header>
@@ -19,10 +19,10 @@ const Main = () => {
       </div>
 
       <footer className="mt-auto text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} Linnad.ee. All Rights Reserved.</p>
+        <p>© {new Date().getFullYear()} linnad.ee. All Rights Reserved.</p>
       </footer>
     </div>
   );
 };
 
-export default Main;
+export default Home;

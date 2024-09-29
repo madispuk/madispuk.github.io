@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import Sketches from "./Sketches";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Main from "./Main";
+import Home from "./Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: <Home />,
   },
   {
     path: "/tallinn",
-    element: <App />,
+    element: <Sketches />,
   },
 ]);
 
