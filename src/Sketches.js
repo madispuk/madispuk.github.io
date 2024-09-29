@@ -24,8 +24,8 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 text-gray-900 flex flex-col items-center p-4">
-      <div className="w-full mb-4 flex-grow shadow-lg rounded-lg border border-gray-200 ">
+    <div className="flex flex-col h-screen bg-slate-50 text-gray-900 items-center lg:p-4">
+      <div className="w-full lg:mb-4 flex-grow">
         <MapContainer className="h-full w-full" center={[59.43, 24.73]} zoom={14} crs={crs}>
           <WMSTileLayer
             url="https://kaart.maaamet.ee/wms/alus?"
@@ -43,8 +43,8 @@ function App() {
         </MapContainer>
       </div>
 
-      <div className="w-full md:w-full lg:w-1/2 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
-        <div className="w-full md:w-1/2 lg:w-1/2 p-4">
+      <div className="w-full lg:w-3/4 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
+        <div className="w-full lg:w-1/2 p-2 lg:p-4">
           <div className="mb-4">
             <select
               id="image-select"
@@ -61,7 +61,7 @@ function App() {
           </div>
 
           <div className="flex items-center justify-start mb-4">
-            <label className="text-sm font-medium text-gray-700" htmlFor="opacity">
+            <label className="text-sm font-medium text-slate-600" htmlFor="opacity">
               Opacity:
             </label>
             <span className="font-bold text-slate-600 pl-2">{opacity.toFixed(2)}</span>
@@ -88,8 +88,8 @@ function App() {
         </div>
 
         <div className="hidden md:block w-full md:w-1/2 lg:w-1/2 p-4 bg-gray-100 rounded-lg shadow-inner mt-4 md:mt-0">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">{sketch.info?.title ?? "Image Info"}</h2>
-          <p className="text-gray-600">{sketch.info?.description ?? "No description available."}</p>
+          <h2 className="text-lg font-semibold text-gray-800 mb-2">{sketch.info.title}</h2>
+          <p className="text-gray-600">{sketch.info.description}</p>
           <ul className="list-disc list-inside mt-2">
             <li>
               <a href={sketch.info.url} target="_blank" rel="noopener noreferrer">
