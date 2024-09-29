@@ -59,4 +59,20 @@ export const sketches = [
         "Projekti eesmärgiks on koostada Paldiski maantee rekonstrueerimise lahendus alates Mooni tänavast kuni Mustamäe tee- Endla tn- Paldiski mnt ristmikuni, mille tulemusel luuakse turvalisem ja mugavam linnaruum kõigile liiklejatele.",
     },
   },
+  {
+    name: "Valge tn",
+    image: "images/valge.png",
+    bounds: [
+      [59.446049, 24.7944614],
+      [59.4344851, 24.8258224],
+    ],
+    center: [59.440947, 24.809327],
+    zoom: 11,
+    info: {
+      title: "Valge tänava eskiisprojekt",
+      url: "https://www.tallinn.ee/et/valge",
+      description:
+        "Valge tänava projekti eesmärgiks on rahustada liiklust ja tõsta jalakäijate turvalisust. Projekti tulemusena muutuvad ülekäigurajad ja bussipeatused mugavamaks ja ligipääsetavamaks ning kogu tänava ulatuses lisandub haljastust. Uus kvaliteetne linnaruum moodustab tulevikus sidusa terviku rajatava Klindipargiga. ",
+    },
+  },
 ];
