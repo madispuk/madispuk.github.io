@@ -43,7 +43,7 @@ function App() {
         </MapContainer>
       </div>
 
-      <div className="w-full lg:w-3/4 md:gap-4 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
+      <div className="w-full lg:w-1/2 md:gap-4 mx-auto bg-white rounded-lg shadow-md p-4 flex flex-col md:flex-row justify-between">
         <div className="w-full md:w-1/2 lg:w-1/2 p-2 lg:p-4">
           <div className="mb-4">
             <select

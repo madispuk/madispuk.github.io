@@ -5,6 +5,7 @@ import Sketches from "./Sketches";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Home";
+import { PostHogProvider } from "posthog-js/react";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,16 @@ const router = createBrowserRouter([
   },
 ]);
 
+const options = {
+  api_host: "https://us.i.posthog.com",
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <PostHogProvider apiKey="phc_znldtUFberTyZqddh5E6OgHuh4aODMNyIH3uPXtoVEE" options={options}>
+      <RouterProvider router={router} />
+    </PostHogProvider>
   </React.StrictMode>,
 );
 
