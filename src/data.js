@@ -1,5 +1,21 @@
 export const sketches = [
   {
+    name: "Lauteri",
+    image: "images/lauteri.png",
+    bounds: [
+      [59.4337168, 24.7528247],
+      [59.4290083, 24.761894],
+    ],
+    center: [59.4318006, 24.756563],
+    zoom: 11,
+    info: {
+      title: "A. Lauteri tn eskiisprojekt november 2024",
+      url: "https://www.tallinn.ee/et/lauteri",
+      description:
+        "Lauteri tänava eskiisprojekti eesmärk on rekonstrueerida tehnovõrke ning kaasajastada seda vastavaks Tallinna linna arengustrateegiatega, luues ohutuma ja kaasaegsema tänavaruumilahenduse. Projekt hõlmab avalikult kasutatava tee ümberkujundamist, mille käigus parendatakse jalakäijate liikumisvõimalusi ja rajatakse sõiduteest eraldatud ohutu ja mugav jalgrattatee.",
+    },
+  },
+  {
     name: "Koidu",
     image: "images/kohalik-full.png",
     bounds: [
